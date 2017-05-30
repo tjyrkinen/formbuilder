@@ -1,0 +1,21 @@
+
+version: "2"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SERVER_URL=http://localhost:8888/v1
+    ports:
+      - "8080:8080"
+    volumes:
+      - /opt/app/node_modules
+      - .:/opt/app
+    depends_on:
+      - kinto
+
+  kinto:
+    image: kinto/kinto-server
+    ports:
+      - "8888:8888"
