@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: formbuilder-app
     environment:
       - SERVER_URL=http://localhost:8888/v1
     ports:
@@ -15,7 +16,60 @@ services:
     depends_on:
       - kinto
 
+  spec:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: formbuilder-app
+    volumes:
+      - /opt/app/node_modules
+      - .:/opt/app
+    command: npm run tdd
+
   kinto:
     image: kinto/kinto-server
     ports:
       - "8888:8888"
+
+  test-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: formbuilder-app
+    environment:
+      - SERVER_URL=http://test-database:8888/v1
+    volumes:
+      - /opt/app/node_modules
+      - .:/opt/app
+    depends_on:
+      - test-database
+
+  test-database:
+    image: kinto/kinto-server
+    environment:
+      - KINTO_USERID_HMAC_SECRET=test:test
+      - KINTO_BUCKET_DELETE_PRINCIPALS=system.Authenticated
+
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: formbuilder-app
+    command: ./wait-for-it.sh --timeout=60 test-database:8888 test-server:8080 -- npm run test-ui
+    volumes:
+      - /opt/app/node_modules
+      - .:/opt/app
+    environment:
+      - DATABASE_URL=http://test-database:8888/v1/
+      - NODE_ENV=test
+    depends_on:
+      - test-server
+      - test-database
+      - selenium
+
+  selenium:
+    image: selenium/standalone-chrome-debug
+    expose:
+      - "4444"
+    ports:
+      - "5900:5900"

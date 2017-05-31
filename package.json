@@ -10,7 +10,8 @@
     "publish-to-npm": "npm run dist && npm publish",
     "start": "node devServer.js",
     "tdd": "npm run test -- -w",
-    "test": "SERVER_URL=http://localhost:8888/v1 NODE_ENV=test mocha --compilers js:babel/register --recursive --require ./test/setup-jsdom.js $(find test -name '*_test.js')"
+    "test": "SERVER_URL=http://localhost:8888/v1 NODE_ENV=test mocha --compilers js:babel/register --recursive --require ./test/setup-jsdom.js $(find test -name '*_test.js')",
+    "test-ui": "wdio --watch test-runner/webdriverio.conf.js"
   },
   "main": "lib/index.js",
   "files": [
@@ -24,7 +25,7 @@
     "history": "^1.17.0",
     "isomorphic-fetch": "^2.2.1",
     "json2csv": "^3.7.0",
-    "kinto-client": "^0.8.0",
+    "kinto-client": "^0.8.3",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.3",
     "react-clipboard.js": "^0.2.5",
@@ -66,6 +67,8 @@
     "sinon": "^1.17.2",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
+    "wdio-mocha-framework": "^0.5.10",
+    "webdriverio": "^4.8.0",
     "webpack": "^1.10.5",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0"
