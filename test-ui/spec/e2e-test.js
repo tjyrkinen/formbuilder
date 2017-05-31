@@ -31,38 +31,39 @@ describe('The site', function() {
   });
 
 
-  it('opens form for new form', async () => {
+  it('opens form for new form', () => {
     browser.url('/').pause(1000)
-    await browser.click(hasText('Start a new form')).pause(1000)
-    await browser.waitForExist(hasText('Untitled form'))
+    browser.click(hasText('Start a new form')).pause(1000);
+    browser.waitForExist(hasText('Untitled form'))
   })
 
 
-  it('can create a simple form and open it for filling', async() => {
+  it('can create a simple form and open it for filling', () => {
     const formTitle = 'My new form'
 
     browser.url('/')
-    await browser
+    browser
       .click(hasText('Start a new form'))
       .pause(500)
-    await browser
+    browser
       .click(hasText('Add a field'))
       .pause(500)
-    await browser
+    browser
       .click(hasText('Short text'))
       .pause(500)
-    await browser
+    browser
       .click('legend span')
       .pause(500)
+    browser
       .setValue('legend input', formTitle)
       .pause(500)
-    await browser
+    browser
       .click(hasText('Save your form'))
       .pause(500)
 
-    const formUrls = await browser.getValue('input.form-control')
+    const formUrls = browser.getValue('input.form-control')
 
-    await browser
+    browser
       .url(formUrls[0])
       .waitForExist(hasText(formTitle))
 
