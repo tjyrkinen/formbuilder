@@ -1,26 +1,17 @@
 Formbuilder
 ===========
 
-[![Build Status](https://travis-ci.org/Kinto/formbuilder.svg?branch=master)](https://travis-ci.org/Kinto/formbuilder)
-
-If you want to try it out, have a look [at the demo
-page](https://kinto.github.io/formbuilder/)
+Fork from Kinto/formbuilder. The purpose of this fork is to add and demonstrate an end-to-end testing setup using WebdriverIO and Dockerized environments.
 
 # Installation
 
 To run the formbuilder locally, you can issue the following commands:
 
 ```
-$ git clone https://github.com/Kinto/formbuilder.git  
+$ git clone https://github.com/tjyrkinen/formbuilder.git  
 $ cd formbuilder  
-$ npm install
-$ npm run start  
+$ docker-compose up app
 ```
-
-You also need to have a [Kinto](https://kinto.readthedocs.io) server **greater
-than 4.3.1** in order to store your data. If you don't already have one, follow [the
-installation instructions](http://kinto.readthedocs.io/en/stable/tutorials/install.html)!
-
 # Configuration
 
 It's possible to configure a few things, using environment variables:
