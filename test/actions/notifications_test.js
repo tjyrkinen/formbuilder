@@ -22,6 +22,10 @@ describe("notifications actions", () => {
   });
 
   describe("addNotification", () => {
+    beforeEach(() => {
+      sandbox.useFakeTimers();
+    });
+
     it("should send info notifications by default", (done) => {
       addNotification("Some info message")(({type, notification}) => {
         expect(type).to.eql(NOTIFICATION_ADD);
@@ -41,10 +45,6 @@ describe("notifications actions", () => {
       });
     });
     describe("With fake timers", () => {
-      beforeEach(() => {
-        sandbox.useFakeTimers();
-      });
-
       it("should dismiss a message after a specific time", () => {
         addNotification("Some dismissable message", {
           type: "info",
